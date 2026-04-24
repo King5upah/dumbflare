@@ -1,18 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChatInterface } from './ChatInterface';
 import { DinoTask } from './tasks/DinoTask';
 import { GridTask } from './tasks/GridTask';
 import { SliderTask } from './tasks/SliderTask';
+import { TrolleyTask } from './tasks/TrolleyTask';
+import { SignatureTask } from './tasks/SignatureTask';
+import { MazeTask } from './tasks/MazeTask';
 import { getSassyResponse, getHumanityScore, getHumanityLabel, pickMood } from '../lib/SassyEngine';
 import { LocaleProvider, useLocale } from '../lib/LocaleContext';
 import { CheckCircle2, ShieldX, Eye, BadgeCheck } from 'lucide-react';
-import type { Locale } from '../lib/i18n/types';
+import type { Locale, TaskReason } from '../lib/i18n/types';
 
-type Step = 'chat' | 'task_dino' | 'task_grid' | 'task_slider' | 'success' | 'fail_recap' | 'pass_surprise';
+type TaskStep = 'task_dino' | 'task_grid' | 'task_slider' | 'task_trolley' | 'task_signature' | 'task_maze';
+type Step = 'chat' | TaskStep | 'success' | 'fail_recap' | 'pass_surprise';
 
-const TASK_SEQUENCE: Step[] = ['task_dino', 'task_grid', 'task_slider'];
-const PASS_CHANCE = [0.20, 0.30, 0.15];
+const ALL_TASKS: TaskStep[] = ['task_dino', 'task_grid', 'task_slider', 'task_trolley', 'task_signature', 'task_maze'];
+
+const PASS_CHANCE: Record<TaskStep, number> = {
+  task_dino: 0.18,
+  task_grid: 0.25,
+  task_slider: 0.15,
+  task_trolley: 0.22,
+  task_signature: 0.20,
+  task_maze: 0.12,
+};
+
+const shuffle = <T,>(arr: T[]): T[] => {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+};
+
+const buildSession = (): TaskStep[] => {
+  const count = Math.floor(Math.random() * 3) + 1; // 1–3
+  return shuffle(ALL_TASKS).slice(0, count);
+};
 
 const meterGradient = (score: number) => {
   if (score >= 100) return 'from-emerald-600 to-emerald-400';
@@ -30,6 +56,8 @@ const CaptchaInner: React.FC<{ onVerified?: () => void }> = ({ onVerified }) => 
   const { locale, data } = useLocale();
   const { ui, passLines } = data;
 
+  const session = useMemo(() => buildSession(), []);
+
   const [step, setStep]               = useState<Step>('chat');
   const [taskIndex, setTaskIndex]     = useState(0);
   const [failCount, setFailCount]     = useState(0);
@@ -39,9 +67,10 @@ const CaptchaInner: React.FC<{ onVerified?: () => void }> = ({ onVerified }) => 
   const humanityScore = getHumanityScore(failCount);
   const labelInfo     = getHumanityLabel(humanityScore, locale);
 
-  const handleTaskDone = (reason: 'efficiency' | 'failure' | 'gaslighting') => {
+  const handleTaskDone = (reason: TaskReason) => {
+    const currentTask = session[taskIndex];
     const roll = Math.random();
-    const passed = roll < PASS_CHANCE[taskIndex];
+    const passed = roll < PASS_CHANCE[currentTask];
 
     if (passed) {
       setCurrentPass(passLines[Math.floor(Math.random() * passLines.length)]);
@@ -56,13 +85,15 @@ const CaptchaInner: React.FC<{ onVerified?: () => void }> = ({ onVerified }) => 
   const advance = () => {
     const next = taskIndex + 1;
     setTaskIndex(next);
-    if (next < TASK_SEQUENCE.length) {
-      setStep(TASK_SEQUENCE[next]);
+    if (next < session.length) {
+      setStep(session[next]);
     } else {
       setStep('success');
       onVerified?.();
     }
   };
+
+  const currentTask = session[taskIndex] as TaskStep | undefined;
 
   return (
     <div className="w-full max-w-md space-y-3">
@@ -108,7 +139,7 @@ const CaptchaInner: React.FC<{ onVerified?: () => void }> = ({ onVerified }) => 
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 1.05 }}
           >
-            <ChatInterface onSequenceComplete={() => { setStep('task_dino'); setTaskIndex(0); }} />
+            <ChatInterface onSequenceComplete={() => { setStep(session[0]); setTaskIndex(0); }} />
           </motion.div>
         )}
 
@@ -133,6 +164,30 @@ const CaptchaInner: React.FC<{ onVerified?: () => void }> = ({ onVerified }) => 
             initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -24 }}
           >
             <SliderTask onComplete={() => handleTaskDone('failure')} />
+          </motion.div>
+        )}
+
+        {step === 'task_trolley' && (
+          <motion.div key="trolley"
+            initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -24 }}
+          >
+            <TrolleyTask onComplete={handleTaskDone} />
+          </motion.div>
+        )}
+
+        {step === 'task_signature' && (
+          <motion.div key="signature"
+            initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -24 }}
+          >
+            <SignatureTask onComplete={handleTaskDone} />
+          </motion.div>
+        )}
+
+        {step === 'task_maze' && (
+          <motion.div key="maze"
+            initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -24 }}
+          >
+            <MazeTask onComplete={handleTaskDone} />
           </motion.div>
         )}
 
@@ -185,7 +240,7 @@ const CaptchaInner: React.FC<{ onVerified?: () => void }> = ({ onVerified }) => 
               onClick={advance}
               className="w-full py-3 bg-teal-600/70 hover:bg-teal-500/80 text-white rounded-xl font-medium transition-all border border-teal-500/30 text-sm"
             >
-              {taskIndex + 1 < TASK_SEQUENCE.length ? ui.proceedToNextEvaluation : ui.completeVerification}
+              {taskIndex + 1 < session.length ? ui.proceedToNextEvaluation : ui.completeVerification}
             </button>
           </motion.div>
         )}

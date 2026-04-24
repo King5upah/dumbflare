@@ -2,8 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Bot, Send } from 'lucide-react';
 import { useLocale } from '../lib/LocaleContext';
-import { classifyIntent, nlpLabel } from '../lib/NLPEngine';
-import type { Mood, Script } from '../lib/i18n/types';
+import { classifyIntent, detectWrittenLanguage, nlpLabel } from '../lib/NLPEngine';
+import { getLocale } from '../lib/i18n';
+import type { Mood, Script, Locale } from '../lib/i18n/types';
 
 interface Message {
   id: string;
@@ -31,7 +32,12 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ onSequenceComplete
   const [isTyping, setIsTyping] = useState(false);
   const [convStep, setConvStep] = useState(0);
   const [locked, setLocked] = useState(false);
+  const [activeLocale, setActiveLocale] = useState<Locale>(locale);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const langVotes = useRef<Partial<Record<Locale, number>>>({});
+
+  const activeData = activeLocale === locale ? data : getLocale(activeLocale);
+  const activeScript: Script = activeData.chatScripts[personality.current];
 
   const addMessage = (text: string, sender: 'bot' | 'user') =>
     setMessages(prev => [...prev, { id: Math.random().toString(36).substring(2), text, sender }]);
@@ -45,7 +51,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ onSequenceComplete
       setIsTyping(true);
       await sleep(900 + Math.random() * 400);
       setIsTyping(false);
-      addMessage(pick(script.opener), 'bot');
+      addMessage(pick(activeData.chatScripts[personality.current].opener), 'bot');
     };
     init();
   }, []);
@@ -60,22 +66,33 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ onSequenceComplete
     setInputText('');
     addMessage(userText, 'user');
 
+    // Written language detection — vote and switch after 2 consistent signals
+    const detected = detectWrittenLanguage(userText);
+    if (detected) {
+      const votes = langVotes.current;
+      votes[detected] = (votes[detected] ?? 0) + 1;
+      if (detected !== activeLocale && (votes[detected] ?? 0) >= 2) {
+        setActiveLocale(detected);
+      }
+    }
+
     const step = (convStep + 1) as 1 | 2 | 3;
     setConvStep(step);
-    const intent = classifyIntent(userText, locale);
+    const intent = classifyIntent(userText, activeLocale);
+    const currentScript = activeData.chatScripts[personality.current];
 
     setIsTyping(true);
     await sleep(900 + Math.random() * 700);
     setIsTyping(false);
 
-    addMessage(pick(script.step[step][intent]), 'bot');
+    addMessage(pick(currentScript.step[step][intent]), 'bot');
 
     if (step === 3) {
       setIsTyping(true);
       await sleep(1000 + Math.random() * 400);
       setIsTyping(false);
       setLocked(true);
-      addMessage(pick(script.final), 'bot');
+      addMessage(pick(currentScript.final), 'bot');
       setTimeout(onSequenceComplete, 1800);
     }
   };
@@ -89,7 +106,10 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ onSequenceComplete
         </div>
         <div className="flex items-center gap-3">
           <span className="text-[9px] font-mono text-white/20 uppercase tracking-widest">
-            NLP · {nlpLabel(locale)}
+            NLP · {nlpLabel(activeLocale)}
+            {activeLocale !== locale && (
+              <span className="text-orange-400/60 ml-1">↺</span>
+            )}
           </span>
           <div className="flex items-center gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />

@@ -59,3 +59,28 @@ export const nlpLabel = (locale: Locale): string => {
   };
   return labels[locale];
 };
+
+// Character/keyword signals for each locale
+const writtenSignals: Record<Locale, RegExp> = {
+  ja: /[぀-ヿ一-鿿･-ﾟ]/,
+  de: /\b(ich|und|das|die|der|ist|ein|eine|nicht|mit|auf|für|aber|oder|wir|sie|du|haben|sein|werden)\b/i,
+  fr: /\b(je|tu|il|nous|vous|ils|est|une|les|des|pas|avec|pour|dans|sur|mais|ou|donc|car|qui|que)\b/i,
+  es: /\b(yo|tú|él|nosotros|vosotros|ellos|es|una|los|las|con|para|pero|como|que|porque|cuando|donde)\b/i,
+  en: /\b(the|is|are|was|were|have|has|had|will|would|can|could|should|this|that|with|from|they|what)\b/i,
+};
+
+export const detectWrittenLanguage = (text: string): Locale | null => {
+  // Japanese is unambiguous via Unicode block
+  if (writtenSignals.ja.test(text)) return 'ja';
+
+  const scores: Partial<Record<Locale, number>> = {};
+  for (const locale of ['de', 'fr', 'es', 'en'] as Locale[]) {
+    const matches = text.match(new RegExp(writtenSignals[locale].source, 'gi'));
+    scores[locale] = matches ? matches.length : 0;
+  }
+
+  const best = (Object.entries(scores) as [Locale, number][])
+    .sort(([, a], [, b]) => b - a)[0];
+
+  return best && best[1] > 0 ? best[0] : null;
+};
