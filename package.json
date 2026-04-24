@@ -1,6 +1,6 @@
 {
   "name": "stupid-captcha",
-  "version": "1.5.0",
+  "version": "2.0.0",
   "description": "The world's first AI-driven Continuous Humanity Validation System. Annoying by design.",
   "type": "module",
   "main": "./dist/stupid-captcha.umd.cjs",
