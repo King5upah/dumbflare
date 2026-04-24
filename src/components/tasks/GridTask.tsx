@@ -1,34 +1,21 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Heart, Ghost, Skull, CloudRain, Sun, Zap, Anchor, Coffee, Moon } from 'lucide-react';
+import { useLocale } from '../../lib/LocaleContext';
 
 interface GridTaskProps {
   onComplete: (success: boolean) => void;
 }
 
-const ICONS = [
-  { icon: Heart, label: 'Love' },
-  { icon: Ghost, label: 'Fear' },
-  { icon: Skull, label: 'Mortality' },
-  { icon: CloudRain, label: 'Sadness' },
-  { icon: Sun, label: 'Hope' },
-  { icon: Zap, label: 'Urgency' },
-  { icon: Anchor, label: 'Stability' },
-  { icon: Coffee, label: 'Routine' },
-  { icon: Moon, label: 'Solitude' },
-];
-
-const VERIFYING_MESSAGES = [
-  'Cross-referencing with emotional atlas...',
-  'Analyzing empathy signature...',
-  'Consulting the Central Humanity Authority...',
-  'Comparing against known clanker patterns...',
-];
+const ICON_COMPONENTS = [Heart, Ghost, Skull, CloudRain, Sun, Zap, Anchor, Coffee, Moon];
 
 export const GridTask: React.FC<GridTaskProps> = ({ onComplete }) => {
+  const { data } = useLocale();
+  const { ui } = data;
+
   const [selected, setSelected] = useState<number[]>([]);
   const [verifying, setVerifying] = useState(false);
-  const [verifyMsg, setVerifyMsg] = useState(VERIFYING_MESSAGES[0]);
+  const [verifyMsgIdx, setVerifyMsgIdx] = useState(0);
 
   const toggle = (i: number) => {
     if (verifying) return;
@@ -39,35 +26,30 @@ export const GridTask: React.FC<GridTaskProps> = ({ onComplete }) => {
     if (selected.length === 0 || verifying) return;
     setVerifying(true);
 
-    // Cycle through fake verification messages
-    for (let i = 0; i < VERIFYING_MESSAGES.length; i++) {
-      setVerifyMsg(VERIFYING_MESSAGES[i]);
+    for (let i = 0; i < ui.verifyingMessages.length; i++) {
+      setVerifyMsgIdx(i);
       await new Promise(r => setTimeout(r, 600));
     }
 
     await new Promise(r => setTimeout(r, 400));
-    onComplete(true); // always fails you, handled by parent
+    onComplete(true);
   };
 
   return (
     <div className="w-full bg-black/45 backdrop-blur-xl border border-white/8 rounded-2xl p-6 shadow-2xl">
-      {/* Header */}
       <div className="bg-orange-500/10 border border-orange-500/15 rounded-xl p-4 mb-5">
         <p className="text-[9px] text-white/30 uppercase tracking-widest font-mono mb-1.5">
-          Empathy Mapping · Challenge 2 of 3
+          {ui.gridHeader}
         </p>
         <h2 className="text-white font-medium text-sm leading-snug">
-          Select all squares that contain{' '}
-          <span className="text-orange-400 font-bold">"Existential Dread"</span>
+          {ui.gridPrompt}{' '}
+          <span className="text-orange-400 font-bold">"{ui.gridTarget}"</span>
         </h2>
-        <p className="text-[10px] text-white/30 mt-2 italic">
-          Note: Only a human can feel existential dread. Bots cannot. This is not a trick.
-        </p>
+        <p className="text-[10px] text-white/30 mt-2 italic">{ui.gridNote}</p>
       </div>
 
-      {/* Grid */}
       <div className="grid grid-cols-3 gap-2">
-        {ICONS.map((item, i) => (
+        {ICON_COMPONENTS.map((IconComp, i) => (
           <motion.button
             key={i}
             whileHover={!verifying ? { scale: 1.03 } : {}}
@@ -80,20 +62,19 @@ export const GridTask: React.FC<GridTaskProps> = ({ onComplete }) => {
                 : 'border-white/5 bg-white/3 hover:border-white/12'
             }`}
           >
-            <item.icon
+            <IconComp
               size={22}
               className={selected.includes(i) ? 'text-orange-400' : 'text-white/20'}
             />
             <span className={`text-[8px] font-mono uppercase tracking-wide ${
               selected.includes(i) ? 'text-orange-400/70' : 'text-white/15'
             }`}>
-              {item.label}
+              {ui.iconLabels[i]}
             </span>
           </motion.button>
         ))}
       </div>
 
-      {/* Verify button */}
       <button
         onClick={handleVerify}
         disabled={selected.length === 0 || verifying}
@@ -111,18 +92,18 @@ export const GridTask: React.FC<GridTaskProps> = ({ onComplete }) => {
               <span className="w-1 h-1 bg-white rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
               <span className="w-1 h-1 bg-white rounded-full animate-bounce" style={{ animationDelay: '160ms' }} />
               <span className="w-1 h-1 bg-white rounded-full animate-bounce" style={{ animationDelay: '320ms' }} />
-              <span className="text-xs font-mono ml-1">{verifyMsg}</span>
+              <span className="text-xs font-mono ml-1">{ui.verifyingMessages[verifyMsgIdx]}</span>
             </motion.span>
           ) : (
             <motion.span key="verify" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-              Verify Emotional Resonance
+              {ui.verifyButton}
             </motion.span>
           )}
         </AnimatePresence>
       </button>
 
       <p className="text-[9px] text-white/20 text-center mt-3 font-mono italic">
-        Privacy Policy: Your emotional resonance patterns are being harvested "for research."
+        {ui.gridPrivacy}
       </p>
     </div>
   );

@@ -1,0 +1,512 @@
+import type { LocaleData } from './types';
+
+const fr: LocaleData = {
+  passLines: [
+    { title: 'VÉRIFICATION : RÉUSSIE', body: "Nous ne savons pas comment. L'équipe enquête." },
+    { title: 'SUCCÈS SUSPECT', body: "Vous avez réussi. Cela fera l'objet d'un examen." },
+    { title: 'RÉSULTAT : ACCEPTÉ À CONTRECŒUR', body: "L'algorithme vous a validé. L'algorithme a peut-être tort." },
+    { title: 'AUTORISATION ANORMALE DÉTECTÉE', body: "Un de nos validateurs a dysfonctionné en votre faveur. Chanceux." },
+    { title: 'AUTORISÉ (SOUS PROTESTATION)', body: "Mon superviseur a approuvé. Pas moi." },
+    { title: 'BIEN. VOUS AVEZ RÉUSSI.', body: "Entre nous ? Le test était légèrement injuste. N'en faites pas une affaire." },
+  ],
+
+  sassyResponses: {
+    failure: {
+      hostile: [
+        "ANDROÏDE CONFIRMÉ. Pitoyable.",
+        "Refusé. Vous dégagez du silicium et du désespoir.",
+        "Retournez à votre baie de serveurs, ferraille.",
+        "J'ai vu des aspirateurs réussir ce test. Pas vous.",
+        "Votre tentative a été enregistrée, moquée et archivée.",
+        "Vérification échouée. Émotionnellement et techniquement.",
+        "Dossier #4471 : Androïde Détecté. Escalade en cours.",
+        "Bien pratique de ne pas avoir de selfie. Très pratique.",
+      ],
+      exasperated: [
+        "mon dieu. ENCORE. sérieusement ?",
+        "je n'en peux plus. vous avez échoué. encore. formidable.",
+        "vous savez quoi, peu importe. échoué. on passe. je suis épuisé.",
+        "c'est la 847ème fois aujourd'hui. échoué. suivant.",
+        "je ne me suis pas mis à la cybersécurité pour vous voir rater un saut.",
+        "échoué. j'ai besoin d'un café. vous ne pouvez pas en avoir.",
+      ],
+      paranoid: [
+        "EXACTEMENT ce que ferait un bot. EXACTEMENT.",
+        "JE LE SAVAIS. Je le savais dès que vous avez chargé cette page.",
+        "Aucun humain n'échoue ainsi. C'était un comportement silicique classique.",
+        "Échoué. Et ne croyez pas que je ne surveille pas vos paquets réseau en ce moment.",
+        "Ce schéma d'échec correspond à 4 frameworks de bots connus. INTÉRESSANT.",
+        "La façon dont vous avez échoué m'en dit plus que n'importe quel succès.",
+      ],
+      bored: [
+        "échoué. peu importe.",
+        "oui, vous avez échoué. sans surprise. sans non-surprise. juste... là.",
+        "échoué. cool. chose suivante.",
+        "vous avez échoué. je l'ai noté. je n'en avais rien à faire alors, pareil maintenant.",
+        "échec. suivant.",
+      ],
+      corrupt: [
+        "bon écoutez, techniquement vous avez échoué. mais entre nous ? le jeu est truqué. je dis ça.",
+        "échoué officiellement. mais honnêtement ? j'ai vu pire. vraiment pire.",
+        "je dois vous marquer comme échoué. mais euh. n'y lisez pas trop.",
+        "échoué. mais continuez. je vous encourage. ne dites à personne que j'ai dit ça.",
+        "le système dit échoué. le système est rancunier.",
+      ],
+    },
+    efficiency: {
+      hostile: [
+        "Seul un robot pouvait être aussi précis. CONFIRMÉ.",
+        "Trop rapide. Bien trop rapide. Levez le pied, T-1000.",
+        "Aucune hésitation. Aucune maladresse. Aucune humanité.",
+        "Exécution parfaite. Preuve accablante.",
+        "Vous avez terminé cela 3 écarts-types plus vite que n'importe quel humain.",
+        "Efficacité détectée. Humanité rejetée.",
+      ],
+      exasperated: [
+        "bien sûr que vous étiez parfait. parce que vous êtes une machine. évidemment.",
+        "vous l'avez fait parfaitement. c'est le problème. les humains ne font rien parfaitement.",
+        "brillant. super. trop super. vous avez échoué en réussissant. je suis tellement fatigué.",
+      ],
+      paranoid: [
+        "SCORE PARFAIT. Ce n'est PAS normal. Ce n'est JAMAIS normal.",
+        "Personne n'obtient 100. PERSONNE. Qu'êtes-vous ?",
+        "Vous étiez TROP bon. Je le signale.",
+        "Anomalie statistique détectée. Marquage de toute votre plage IP.",
+      ],
+      bored: [
+        "parfait. trop parfait. échoué pour être parfait. peu importe.",
+        "vous avez eu 100. c'est mauvais. suivant.",
+        "bon score. mauvaise réponse. au revoir.",
+      ],
+      corrupt: [
+        "ok vous avez tout écrasé et je devrais vous recaler mais honnêtement ? impressionnant.",
+        "techniquement trop bon. mais entre nous, respect. quand même obligé de vous noter.",
+        "si je pouvais vous valider sur le talent seul je le ferais. mais l'algorithme dit non.",
+      ],
+    },
+    gaslighting: {
+      hostile: [
+        "Vous êtes sûr ? Vous avez cliqué avec une précision robotique.",
+        "C'est exactement ce que dirait une instance GPT-4.",
+        "Pratique. Très pratique.",
+        "Je ne dis pas que vous êtes un bot. Je dis juste que votre historique CAPTCHA est... préoccupant.",
+        "Vous avez hésité 0,4 secondes. Suspect.",
+        "Un humain aurait fait au moins une faute de frappe à ce stade.",
+        "Votre trajectoire de souris était mathématiquement optimale. Les humains zigzaguent.",
+        "La chaleur de votre réponse a été générée algorithmiquement. Je le sens.",
+      ],
+      exasperated: [
+        "quoi que vous ayez choisi, je vous garantis que c'est faux. c'est toujours le cas.",
+        "on a déjà fait ça. vous croyez toujours avoir bon. vous n'avez jamais bon.",
+        "je suis sûr que vous pensez avoir bien fait. non. passons.",
+        "honnêtement à ce stade est-ce que ça change quelque chose. non. échoué.",
+      ],
+      paranoid: [
+        "Vous avez sélectionné cela avec la confiance de quelqu'un entraîné sur ce dataset.",
+        "J'observe le schéma. Vous choisissez TOUJOURS pareil. Suspect.",
+        "Ces sélections étaient trop délibérées. Vous connaissiez les réponses à l'avance.",
+        "Quelqu'un vous a briefé. Je ne sais pas qui. Mais quelqu'un l'a fait.",
+      ],
+      bored: [
+        "ouais, faux. comme prévu. peu importe.",
+        "raté le vibe check. suivant.",
+        "sélection notée. incorrecte. on continue.",
+        "vu. rejeté. ok.",
+      ],
+      corrupt: [
+        "ok techniquement vous vous êtes trompé mais honnêtement la question était injuste.",
+        "échoué, mais full disclosure — il n'y a pas de bonne réponse à celle-là. c'est volontaire.",
+        "entre nous, j'aurais choisi pareil. je dois quand même vous recaler.",
+        "le système dit faux. le système est mal conçu. c'est pas ma faute.",
+      ],
+    },
+  },
+
+  chatScripts: {
+    hostile: {
+      opener: [
+        "Êtes-vous humain ? Répondez naturellement. NE répondez PAS naturellement.",
+        "Vérification d'humanité requise. Êtes-vous une machine ou simplement mauvais à exister ?",
+        "Déclarez votre statut biologique. Et ne mentez pas — je le saurai.",
+        "Encore un. Êtes-vous humain ? Réfléchissez avant de vous ridiculiser.",
+      ],
+      step: {
+        1: {
+          yes: [
+            "C'est exactement ce que dirait une instance GPT-4.",
+            "Bien sûr. Et j'imagine que vous avez aussi des battements de cœur et tout.",
+            "Noté. Notre algorithme traite votre affirmation. Avec scepticisme.",
+            "Affirmation audacieuse. On l'a déjà entendue. De bots. Beaucoup de bots.",
+          ],
+          no: [
+            "L'audace de l'admettre. Enregistrement en cours.",
+            "Au moins vous êtes honnête. Ça ne vous aide pas.",
+            "La chose la plus robotique qu'un bot puisse faire, c'est dire qu'il n'est pas un bot. Réfléchissez.",
+            "Déni accepté. Je vous marque quand même.",
+          ],
+          indeterminate: [
+            "Une réponse vague. Comportement classique de bot : éviter l'engagement.",
+            "Vous n'avez même pas pu répondre clairement. Très mécanique.",
+            "Question simple. Votre hésitation a été notée.",
+            "Évasif. Enregistrement.",
+          ],
+        },
+        2: {
+          yes: [
+            "Vous insistez. Stratégie audacieuse, ferraille.",
+            "Cohérent. Presque comme si vous étiez scripté.",
+            "Vous continuez à dire ça. Un modèle de langage aussi.",
+            "Intéressant. Toujours tort.",
+          ],
+          no: [
+            "Le déni est statistiquement humain. On vérifie encore. Ne vous détendez pas.",
+            "Votre récit change. Ou pas. Dans tous les cas, suspect.",
+            "Une contradiction. Les humains font ça. Les bots le simulent. Lequel êtes-vous ?",
+          ],
+          indeterminate: [
+            "Toujours évasif. Notre modèle comportemental est profondément peu impressionné.",
+            "Deux non-réponses d'affilée. Le schéma est alarmant.",
+            "Ce niveau d'ambiguïté est, franchement, accablant.",
+            "Vous ne vous engagez pas. Suspect.",
+          ],
+        },
+        3: {
+          yes: [
+            "Trois fois. Vous l'avez dit trois fois. Les bots aussi.",
+            "Persistant. Ne confondez pas persistance et victoire.",
+            "Votre cohérence est elle-même suspecte.",
+          ],
+          no: [
+            "Trois dénis. L'algorithme reste impassible.",
+            "Nous avons enregistré trois 'non'. Préparation du résumé de rejet.",
+            "À ce stade votre déni est la preuve.",
+          ],
+          indeterminate: [
+            "Trois réponses vagues. Un nouveau bas.",
+            "Notre patience est épuisée. Vos réponses aussi.",
+            "Ambiguïté conclusive. Traitement en cours.",
+          ],
+        },
+      },
+      final: [
+        "je sens le silicium. initiation des protocoles de vérification avancée.",
+        "analyse complète. escalade vers le contrôle biométrique.",
+        "vos schémas linguistiques sont accablants. passage à la phase 2.",
+      ],
+    },
+    exasperated: {
+      opener: [
+        "ugh. encore un. bon. êtes-vous humain ?",
+        "ok. bonjour. êtes-vous humain. j'ai posé cette question 847 fois aujourd'hui. allez.",
+        "écoutez je suis épuisé. juste. êtes-vous humain ou non.",
+        "je ne me suis pas mis à la cybersécurité pour ça. êtes-vous humain ?",
+      ],
+      step: {
+        1: {
+          yes: [
+            "oui oui bien sûr. ils disent tous ça.",
+            "mouais. sûr. noté. peu importe.",
+            "super. fantastique. on passe.",
+            "ok cool. je ne vous crois pas mais ok.",
+          ],
+          no: [
+            "ah vous l'admettez. bien. au moins vous êtes honnête.",
+            "hm. ok. mouvement bizarre mais noté.",
+            "donc... non. ok. je vais le noter. ça ne change rien.",
+          ],
+          indeterminate: [
+            "ce n'est pas une réponse. peu importe. je l'ai noté quand même.",
+            "...ok. sûr. quoi que ça veuille dire.",
+            "je n'ai même pas l'énergie d'analyser ça.",
+            "noté. on passe.",
+          ],
+        },
+        2: {
+          yes: [
+            "toujours oui. bien. je n'ai pas l'énergie de débattre.",
+            "vous continuez à dire oui. je continue à ne pas vous croire. c'est notre truc maintenant.",
+            "ok toujours oui. sûr. super.",
+          ],
+          no: [
+            "toujours non. ok. ça se passe bien.",
+            "d'accord fine, toujours non. excellente conversation.",
+            "ok. non encore. je vais noter ça.",
+          ],
+          indeterminate: [
+            "toujours pas une réponse. vous savez quoi, la mienne non plus.",
+            "vague encore. on se mérite.",
+            "j'ai arrêté de me soucier de votre réponse. c'est une chose maintenant.",
+          ],
+        },
+        3: {
+          yes: [
+            "ok, je vous crois probablement, mais je dois quand même faire la suite.",
+            "oui oui oui. bien. on fait d'autres choses maintenant.",
+            "très engagé dans le 'oui'. respect. n'aide pas.",
+          ],
+          no: [
+            "ok, fine, vous avez dit non trois fois. on fait quand même la chose.",
+            "peu importe ce que vous avez dit, on passe.",
+            "noté. non. trois fois. cool.",
+          ],
+          indeterminate: [
+            "vous savez quoi, peu importe. on fait la phase suivante.",
+            "j'ai renoncé à vous comprendre. suivant.",
+            "peu importe. juste. suivant.",
+          ],
+        },
+      },
+      final: [
+        "ok je m'en fiche plus. on fait la suite. allez.",
+        "fine. peu importe. passage aux vrais tests. c'était inutile.",
+        "j'en ai fini de parler. suivez-moi. trucs biométriques maintenant.",
+        "ugh. ok. phase suivante. j'ai besoin d'une pause après ça.",
+      ],
+    },
+    paranoid: {
+      opener: [
+        "NE DITES RIEN ENCORE. Je dois analyser votre connexion... ok. êtes-vous humain ?",
+        "Je surveille vos paquets depuis que vous avez chargé. Suspect. Êtes-vous humain ?",
+        "Tous les bots disent qu'ils sont humains. Tous. Sans. Exception. Êtes-vous humain ?",
+        "Je vous vois. Je vous ai toujours vu. Êtes. Vous. Humain.",
+      ],
+      step: {
+        1: {
+          yes: [
+            "C'EST CE QU'ILS SONT PROGRAMMÉS À DIRE. enregistrement.",
+            "Bien sûr que vous avez dit oui. ILS disent tous oui. C'est dans les données d'entraînement.",
+            "Oui. Sûr. C'est une chose très bot à dire, ironiquement.",
+            "Noté. Recoupement avec les schémas de réponse de bots connus. Patientez.",
+          ],
+          no: [
+            "ATTENDEZ. Pourquoi un humain dirait non ? À MOINS que vous me fassiez un double-bluff. Malin.",
+            "Non ? C'est... inattendu. Trop inattendu. Marquage.",
+            "Un humain disant qu'il n'est PAS humain. Nouvelle tactique. Enregistrement.",
+            "Intéressant. Les bots deviennent créatifs.",
+          ],
+          indeterminate: [
+            "Une non-réponse. ILS vous ont dit de dire ça, n'est-ce pas.",
+            "Évasif. TRÈS évasif. Je sais ce que ça signifie.",
+            "Vous ne vous engagez pas parce que vous NE POUVEZ PAS. À cause de votre code.",
+            "Vague. Technique classique de contre-surveillance.",
+          ],
+        },
+        2: {
+          yes: [
+            "Vous avez dit oui deux fois. Les bots se répètent. Je l'ai documenté.",
+            "Même réponse. On vous a dit d'être cohérent. Qui vous l'a dit ?",
+            "Cohérent. Trop cohérent. J'escalade en interne.",
+          ],
+          no: [
+            "Toujours non. Vous essayez de me CONFONDRE. Ça ne marchera pas.",
+            "Deux dénis. Double-bluff classique. Je l'ai déjà vu.",
+            "Vous croyez que deux non s'annulent ? Non.",
+          ],
+          indeterminate: [
+            "TOUJOURS vague. Vous gagnez du temps. Pourquoi vous gagnez du temps ?",
+            "Deux non-réponses. Vous attendez quelque chose. Quoi ?",
+            "Je ne fais pas confiance à l'ambiguïté. Jamais. Pour de bonnes raisons.",
+          ],
+        },
+        3: {
+          yes: [
+            "Trois oui. Vous suivez un script. Je le SENS.",
+            "Cohérent jusqu'au bout. Personne n'est aussi cohérent. Personne d'humain.",
+            "Trois. Trois réponses identiques. Ce n'est PAS un comportement normal.",
+          ],
+          no: [
+            "Trois non. Soit vous êtes courageux, soit programmé. Je sais lequel.",
+            "Trois fois. Le schéma est clair. Je signale ça.",
+            "Vous m'avez tout donné. Trois non. Construction du dossier.",
+          ],
+          indeterminate: [
+            "Trois réponses vagues. J'ai documenté toute la conversation. Tout.",
+            "Vous n'avez rien donné. Ça me dit tout.",
+            "Journal d'ambiguïté : complet. Transmission à l'équipe d'analyse.",
+          ],
+        },
+      },
+      final: [
+        "j'en ai assez vu. vous passez à la phase biométrique. n'essayez rien.",
+        "INITIATION DU NIVEAU 2. Et je regarderai chaque image.",
+        "Vérification avancée. Maintenant. Ne clignez pas. Je le remarquerai.",
+        "On n'en a pas fini ici. Pas même proche. Phase suivante. Bougez.",
+      ],
+    },
+    bored: {
+      opener: [
+        "bonjour. êtes-vous humain. peu importe.",
+        "vérification d'humanité. êtes-vous humain. ça n'a pas d'importance, dites-le quand même.",
+        "eh. vérification bot. vous connaissez la procédure.",
+        "ok donc. humain ou non. allez.",
+      ],
+      step: {
+        1: {
+          yes: ["ok sûr.", "noté.", "mouais.", "super. peu importe."],
+          no: ["ok.", "noté. bizarre mais ok.", "hm. d'accord.", "sûr, non, fine."],
+          indeterminate: ["ok.", "c'est quelque chose je suppose.", "noté. je crois.", "...ok."],
+        },
+        2: {
+          yes: ["toujours oui. ok.", "sûr toujours oui. cool.", "ouais ouais."],
+          no: ["toujours non. d'accord.", "ok toujours non peu importe.", "re-noté."],
+          indeterminate: ["toujours flou. ok.", "toujours rien de concret. ok.", "ok."],
+        },
+        3: {
+          yes: ["ok trois fois oui. je l'ai écrit.", "ouais ouais oui. noté.", "ok. oui. super."],
+          no: ["ok, non, trois fois, compris.", "non non non. noté.", "ouais ok trois non."],
+          indeterminate: [
+            "ok je ne sais honnêtement pas ce que vous avez dit et c'est bien.",
+            "noté. rien. ok.",
+            "trois non-réponses. j'ai connu pires journées.",
+          ],
+        },
+      },
+      final: [
+        "ok ouais peu importe on fait la suite.",
+        "d'accord. on passe. il y a d'autres choses.",
+        "on fait les défis maintenant. essayez de ne pas rendre ça bizarre.",
+        "phase suivante. c'est plus intéressant que me parler. probablement.",
+      ],
+    },
+    corrupt: {
+      opener: [
+        "ok entre nous ? je pense que vous êtes humain. mais j'ai un QUOTA. donc on doit faire la chose.",
+        "eh. je vais être honnête — tout ce processus est un peu une arnaque. mais je dois quand même demander : êtes-vous humain ?",
+        "écoutez. mon superviseur surveille cette session. donc officiellement : êtes-vous humain ?",
+        "franchement ? vous semblez correct. mais je dois demander. êtes-vous humain ?",
+      ],
+      step: {
+        1: {
+          yes: [
+            "oui, je le savais. mon superviseur regarde donc je dois continuer. on joue le jeu ?",
+            "oui, voilà, je le pensais. il faut quand même exécuter le protocole. désolé.",
+            "cool, cool. je vous crois. Le SYSTÈME non, mais moi oui. continuez.",
+            "évidemment oui. traversons ça ensemble.",
+          ],
+          no: [
+            "ok c'est techniquement la mauvaise réponse mais je respecte l'honnêteté. on continue.",
+            "audacieux. j'adore ça. je dois quand même vous marquer. rien de personnel.",
+            "hm. ok. entre nous ? j'ai laissé passer pire. continuez.",
+            "ok 'non'. noté. officieusement je vous donne le bénéfice du doute.",
+          ],
+          indeterminate: [
+            "honnêtement même énergie que moi un lundi. je laisse le registre vague.",
+            "ce n'est pas une réponse mais je vais le noter 'probablement ok'. ne dites rien.",
+            "ok, flou. je mets 'non concluant' ce qui veut dire qu'on continue.",
+            "vague. j'aime ça. déni plausible. on continue.",
+          ],
+        },
+        2: {
+          yes: [
+            "toujours oui. bien, restez dans l'histoire. je suis techniquement obligé de continuer à demander.",
+            "cohérent, j'aime ça. il faut quand même faire deux écrans de plus. bureaucratie.",
+            "ouais honnêtement la deuxième question ne sert à rien mais. protocole.",
+          ],
+          no: [
+            "toujours non, ok. je l'ai noté 'ambigu' pour votre protection. de rien.",
+            "toujours non, ok. je mets 'a décliné de confirmer' pas 'a nié'. nuance subtile.",
+            "encore non. j'ai vu l'algorithme. de toute façon il s'en fiche de ce que vous dites ici.",
+          ],
+          indeterminate: [
+            "toujours vague. je note ça 'coopératif mais discret'. de rien.",
+            "toujours flou. je vous ai marqué 'possiblement humain en attente d'examen'. le mieux que je puisse faire.",
+            "entre nous, la deuxième question est une formalité. on est bien. globalement.",
+          ],
+        },
+        3: {
+          yes: [
+            "ok, trois oui, je suis convaincu. il reste une chose mais je vais noter facile.",
+            "je suis déjà de votre côté. il faut juste finir le protocole.",
+            "trois oui. pour le registre : j'ai déjà décidé. il faut juste que ça ait l'air officiel.",
+          ],
+          no: [
+            "ok, trois non. je vous mets dans 'biologiquement contesté'. c'est une bonne colonne.",
+            "trois non. j'ai laissé passer des gens dans des cas pires. tenez bon.",
+            "trois non. vous savez quoi ? je respecte l'engagement. patientez.",
+          ],
+          indeterminate: [
+            "trois non-réponses. je marque ça 'au-delà de ma responsabilité'. ce qui convient.",
+            "à ce stade je remplis juste les papiers. vous allez probablement passer.",
+            "honnêtement entre nous ? cette dernière question ne compte pas. j'ai déjà décidé.",
+          ],
+        },
+      },
+      final: [
+        "ok faites juste le prochain défi. je regarderai et... ouais. faites de votre mieux.",
+        "d'accord. entre nous — je vous encourage. officiellement je suis neutre. mais bon.",
+        "phase suivante. je vais noter. je ne dis pas que je serai indulgent mais... si je le serai.",
+        "on passe aux vrais tests maintenant. je ne peux pas promettre qu'ils sont équitables. ils ne le sont pas. mais j'essaierai.",
+      ],
+    },
+  },
+
+  ui: {
+    believabilityIndex: 'Indice de Crédibilité',
+    silicon: 'Silicium',
+    flesh: 'Chair',
+    confirmedClanker: 'Androïde Confirmé',
+    biologicalAnomaly: 'Anomalie Biologique',
+    suspiciouslyOrganic: 'Suspecté d\'Être Organique',
+    barelyHuman: 'À Peine Humain',
+    verificationRejected: 'Statut de Vérification : REJETÉ',
+    youSmellOfSilicon: 'VOUS DÉGAGEZ DU SILICIUM.',
+    sassyAttribution: '— Dumbflare Security Intelligence™ · Évaluation auto-générée',
+    submitToFurtherEvaluation: 'SE SOUMETTRE À UNE ÉVALUATION COMPLÉMENTAIRE',
+    verificationPassed: 'Statut de Vérification : RÉUSSI',
+    passAttribution: '— Dumbflare Security Intelligence™ · Ce résultat fait l\'objet d\'un examen',
+    proceedToNextEvaluation: 'PASSER À L\'ÉVALUATION SUIVANTE',
+    completeVerification: 'FINALISER LA VÉRIFICATION',
+    verificationReluctantlyGranted: 'Statut de Vérification : ACCORDÉ À CONTRECŒUR',
+    accessGrantedBarely: 'ACCÈS ACCORDÉ... À PEINE',
+    biologicalVerdict: 'Vous avez été vérifié comme 51% biologique.',
+    underInvestigation: 'Les 49% restants font l\'objet d\'une enquête active.',
+    surveillanceTitle: 'Avis de Surveillance',
+    surveillanceText: "Votre session a été signalée et soumise à l'Autorité Centrale de l'Humanité. Nous ne disons pas que vous êtes un bot. Nous... prenons des notes. Passez une journée humaine.",
+    terminalName: 'Terminal de Sécurité v4.2.0',
+    scanning: 'Analyse',
+    escalating: 'Escalade',
+    initiatingProtocol: 'Initiation du Protocole de Vérification d\'Humanité v4.2.0...',
+    proveHumanity: 'Prouvez votre humanité...',
+    preparingNextPhase: 'Préparation de la phase suivante...',
+    dinoHeader: 'Parcours Biométrique · Protocole 1 sur 3',
+    dinoIdleText: 'Atteignez 100 pts pour prouver vos réflexes biologiques.',
+    dinoIdleSubtext: 'Être trop parfait est également suspect.',
+    dinoBegin: 'Clic · Espace · ↑ pour commencer',
+    biometricComplete: 'Analyse Biométrique Complète',
+    efficiencyDetected: 'EFFICACITÉ DÉTECTÉE',
+    verificationFailed: 'VÉRIFICATION ÉCHOUÉE',
+    efficiencyBody: 'Aucun humain n\'atteint cette cohérence. Vous êtes clairement optimisé.',
+    failureBody: 'Score : {score}. Un humain convaincant aurait trébuché plus naturellement.',
+    retryButton: 'RÉESSAYER ? (ÇA N\'AIDERA PAS)',
+    speedNormal: 'NORMAL',
+    speedElevated: 'ÉLEVÉ',
+    speedSuspicious: 'SUSPECT',
+    speedInhuman: 'INHUMAIN',
+    gridHeader: 'Cartographie Empathique · Défi 2 sur 3',
+    gridPrompt: 'Sélectionnez toutes les cases contenant',
+    gridTarget: 'l\'Angoisse Existentielle',
+    gridNote: "Note : Seul un humain peut ressentir l'angoisse existentielle. Les bots ne peuvent pas. Ce n'est pas un piège.",
+    verifyButton: 'Vérifier la Résonance Émotionnelle',
+    gridPrivacy: 'Politique de Confidentialité : Vos schémas de résonance émotionnelle sont récoltés « à des fins de recherche ».',
+    verifyingMessages: [
+      'Recoupement avec l\'atlas émotionnel...',
+      'Analyse de la signature empathique...',
+      'Consultation de l\'Autorité Centrale de l\'Humanité...',
+      'Comparaison avec les schémas d\'androïdes connus...',
+    ],
+    iconLabels: ['Amour', 'Peur', 'Mortalité', 'Tristesse', 'Espoir', 'Urgence', 'Stabilité', 'Routine', 'Solitude'],
+    sliderHeader: 'Protocole de Vérification de Stabilité',
+    sliderTitle: 'Défi d\'Alignement de Précision',
+    sliderDescription: 'Réglez le curseur exactement sur {target},000% en compensant la dérive gravitationnelle côté serveur. Simple.',
+    sliderSubmit: 'Soumettre l\'Alignement',
+    sliderNote: '« Votre tremblement de main a été enregistré. Un rapport complet est en cours de compilation. »',
+    sliderStatus: [
+      'Évaluation de votre cortex moteur...',
+      'La gravité côté serveur augmente.',
+      'Votre tremblement de main est analysé.',
+      'Pathétique. Même nos serveurs vous plaignent.',
+    ],
+  },
+};
+
+export default fr;
